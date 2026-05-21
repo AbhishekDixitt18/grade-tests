@@ -25,7 +25,11 @@ pipeline {
             steps {
 
                 sh '''
-                rm -rf ${WORKSPACE}/target || true
+                docker run --rm \
+                -v ${WORKSPACE}:/app \
+                -w /app \
+                ${RUNNER_IMAGE} sh -c "rm -rf target"
+
                 rm -rf ${REPORT_DIR} || true
 
                 mkdir -p ${REPORT_DIR}
