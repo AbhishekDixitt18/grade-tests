@@ -25,15 +25,16 @@ pipeline {
             steps {
 
                 sh '''
+                chmod -R 777 ${WORKSPACE}
+
                 mkdir -p ${REPORT_DIR}
 
                 docker run --rm \
                 -e MAVEN_CONFIG=/tmp/.m2 \
-                --user $(id -u jenkins):$(id -g jenkins) \
                 -v ${WORKSPACE}:/app \
                 -v ${REPORT_DIR}:/app/target/surefire-reports \
                 -w /app \
-                ${RUNNER_IMAGE} mvn test
+                ${RUNNER_IMAGE} mvn clean test
                 '''
             }
         }
