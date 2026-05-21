@@ -39,7 +39,7 @@ pipeline {
                 -v ${WORKSPACE}:/app \
                 -v ${REPORT_DIR}:/app/target/surefire-reports \
                 -w /app \
-                ${RUNNER_IMAGE} mvn clean test
+                ${RUNNER_IMAGE} mvn test
                 '''
             }
         }
