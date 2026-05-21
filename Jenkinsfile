@@ -17,21 +17,21 @@ pipeline {
 
         stage('Pull Image') {
             steps {
-                bat 'docker pull %RUNNER_IMAGE%'
+                sh 'docker pull ${RUNNER_IMAGE}'
             }
         }
 
         stage('Run Tests') {
             steps {
 
-                bat '''
-                if not exist "%REPORT_DIR%" mkdir "%REPORT_DIR%"
+                sh '''
+                mkdir -p ${REPORT_DIR}
 
-                docker run --rm ^
-                -v "%WORKSPACE%:/app" ^
-                -v "%REPORT_DIR%:/app/target/surefire-reports" ^
-                -w /app ^
-                %RUNNER_IMAGE% mvn test
+                docker run --rm \\
+                -v ${WORKSPACE}:/app \\
+                -v ${REPORT_DIR}:/app/target/surefire-reports \\
+                -w /app \\
+                ${RUNNER_IMAGE} mvn test
                 '''
             }
         }
