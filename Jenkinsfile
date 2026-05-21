@@ -9,7 +9,7 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
                 checkout scm
             }
@@ -27,10 +27,11 @@ pipeline {
                 sh '''
                 mkdir -p ${REPORT_DIR}
 
-                docker run --rm \\
-                -v ${WORKSPACE}:/app \\
-                -v ${REPORT_DIR}:/app/target/surefire-reports \\
-                -w /app \\
+                docker run --rm \
+                --user $(id -u jenkins):$(id -g jenkins) \
+                -v ${WORKSPACE}:/app \
+                -v ${REPORT_DIR}:/app/target/surefire-reports \
+                -w /app \
                 ${RUNNER_IMAGE} mvn test
                 '''
             }
