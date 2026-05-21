@@ -25,7 +25,8 @@ pipeline {
             steps {
 
                 sh '''
-                chmod -R 777 ${WORKSPACE}
+                sudo rm -rf ${WORKSPACE}/target
+                sudo rm -rf ${REPORT_DIR}
 
                 mkdir -p ${REPORT_DIR}
 
