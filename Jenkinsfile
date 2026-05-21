@@ -25,8 +25,8 @@ pipeline {
             steps {
 
                 sh '''
-                sudo rm -rf ${WORKSPACE}/target
-                sudo rm -rf ${REPORT_DIR}
+                rm -rf ${WORKSPACE}/target || true
+                rm -rf ${REPORT_DIR} || true
 
                 mkdir -p ${REPORT_DIR}
 
